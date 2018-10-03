@@ -16,6 +16,7 @@ namespace Clash.Controllers {
         private readonly string BaseUrl = "https://api.clashroyale.com/v1/";
 
         [HttpGet]
+        [Route ("getWarLog")]
         public object GetWarLog () {
             string url = BaseUrl + "clans/%232G9L0VCC/warlog?limit=1";
             WebHeaderCollection headers = new WebHeaderCollection ();

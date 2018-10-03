@@ -5,6 +5,8 @@ namespace Clash {
   public class Items {
     [JsonProperty (PropertyName = "participants")]
     public List<WarParticipants> Participants { get; set; }
+    [JsonProperty (PropertyName = "name")]
+    public string Name { get; set; }
   }
 
   public class ItemsList{
