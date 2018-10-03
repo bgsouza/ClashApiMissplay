@@ -1,0 +1,14 @@
+e:\Projects\Clash\bin\Debug\netcoreapp2.1\Clash.deps.json
+e:\Projects\Clash\bin\Debug\netcoreapp2.1\Clash.runtimeconfig.json
+e:\Projects\Clash\bin\Debug\netcoreapp2.1\Clash.runtimeconfig.dev.json
+e:\Projects\Clash\bin\Debug\netcoreapp2.1\Clash.dll
+e:\Projects\Clash\bin\Debug\netcoreapp2.1\Clash.pdb
+e:\Projects\Clash\obj\Debug\netcoreapp2.1\Clash.csprojAssemblyReference.cache
+e:\Projects\Clash\obj\Debug\netcoreapp2.1\Clash.csproj.CoreCompileInputs.cache
+e:\Projects\Clash\obj\Debug\netcoreapp2.1\Clash.RazorAssemblyInfo.cache
+e:\Projects\Clash\obj\Debug\netcoreapp2.1\Clash.RazorAssemblyInfo.cs
+e:\Projects\Clash\obj\Debug\netcoreapp2.1\Clash.AssemblyInfoInputs.cache
+e:\Projects\Clash\obj\Debug\netcoreapp2.1\Clash.AssemblyInfo.cs
+e:\Projects\Clash\obj\Debug\netcoreapp2.1\Clash.RazorTargetAssemblyInfo.cache
+e:\Projects\Clash\obj\Debug\netcoreapp2.1\Clash.dll
+e:\Projects\Clash\obj\Debug\netcoreapp2.1\Clash.pdb
