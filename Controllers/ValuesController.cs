@@ -16,8 +16,8 @@ namespace Clash.Controllers {
         private readonly string BaseUrl = "https://api.clashroyale.com/v1/";
 
         [HttpGet]
-        [Route ("getWarLog")]
-        public object GetWarLog () {
+        [Route ("getLastWar")]
+        public ItemsList GetLastWar () {
             string url = BaseUrl + "clans/%232G9L0VCC/warlog?limit=1";
             WebHeaderCollection headers = new WebHeaderCollection ();
             headers.Add ($"Authorization: Bearer {token}");
@@ -37,7 +37,9 @@ namespace Clash.Controllers {
 
         [HttpGet]
         [Route ("getMembers")]
-        public object GetMembers () {
+        public List<string> GetMembers () {
+            List<string> membersList = new List<string> ();
+
             string url = BaseUrl + "clans/%232G9L0VCC/members";
             WebHeaderCollection headers = new WebHeaderCollection ();
             headers.Add ($"Authorization: Bearer {token}");
@@ -52,7 +54,36 @@ namespace Clash.Controllers {
 
             var responseJson = Newtonsoft.Json.JsonConvert.DeserializeObject<ItemsList> (responseString);
 
-            return responseJson;
+            foreach (var member in responseJson.Items) {
+                membersList.Add (member.Name);
+            }
+
+            return membersList;
+        }
+
+        [HttpGet]
+        [Route ("blackList")]
+        public List<string> BlackList () {
+            List<string> blackList = new List<string> ();
+            var participants = GetLastWar ();
+            var clanMembers = GetMembers ();
+            int warBattlesPlayed;
+            int collectionDayBattlePlayed;
+
+            /// verifica quem participou da última guerra 
+            foreach (var participant in clanMembers.Where (x => x == (participants.Items[0].Participants.FirstOrDefault (y => y.Name == x) == null ?
+                    "" :
+                    participants.Items[0].Participants.First (y => y.Name == x).Name))) {
+                var warParticipant = participant;
+            }
+
+            /// Verifica quem não participou da última guerra
+            foreach (var notParticipant in clanMembers.Where (x => x != (participants.Items[0].Participants.FirstOrDefault (y => y.Name == x) == null ?
+                    "" :
+                    participants.Items[0].Participants.First (y => y.Name == x).Name))) {
+                blackList.Add(notParticipant);
+            }
+            return blackList;
         }
     }
 }
