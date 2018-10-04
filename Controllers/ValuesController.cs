@@ -62,28 +62,37 @@ namespace Clash.Controllers {
         }
 
         [HttpGet]
-        [Route ("blackList")]
-        public List<string> BlackList () {
-            List<string> blackList = new List<string> ();
+        [Route ("notParticipantsList")]
+        public List<string> NotParticipantsList () {
+            List<string> notParticipantsList = new List<string> ();
             var participants = GetLastWar ();
             var clanMembers = GetMembers ();
-            int warBattlesPlayed;
-            int collectionDayBattlePlayed;
-
-            /// verifica quem participou da última guerra 
-            foreach (var participant in clanMembers.Where (x => x == (participants.Items[0].Participants.FirstOrDefault (y => y.Name == x) == null ?
-                    "" :
-                    participants.Items[0].Participants.First (y => y.Name == x).Name))) {
-                var warParticipant = participant;
-            }
 
             /// Verifica quem não participou da última guerra
             foreach (var notParticipant in clanMembers.Where (x => x != (participants.Items[0].Participants.FirstOrDefault (y => y.Name == x) == null ?
                     "" :
                     participants.Items[0].Participants.First (y => y.Name == x).Name))) {
-                blackList.Add(notParticipant);
+                notParticipantsList.Add(notParticipant);
             }
-            return blackList;
+            return notParticipantsList;
+        }
+
+        [HttpGet]
+        [Route ("zeroBattlesPlayed")]
+        public List<string> ZeroBattlesPlayed () {
+            List<string> zeroBattlesPlayedList = new List<string> ();
+            var participants = GetLastWar ();
+            var clanMembers = GetMembers ();
+
+            /// verifica quem participou da última guerra e não atacou
+            foreach (var participant in clanMembers.Where (x => x == (participants.Items[0].Participants.FirstOrDefault (y => y.Name == x && y.WarBattlesPlayed == 0) == null ?
+                    "" :
+                    participants.Items[0].Participants.First (y => y.Name == x && y.WarBattlesPlayed == 0).Name))) {
+                var warParticipant = participant;
+                zeroBattlesPlayedList.Add(warParticipant);
+            }
+            
+            return zeroBattlesPlayedList;
         }
     }
 }

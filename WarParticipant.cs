@@ -5,10 +5,10 @@ namespace Clash {
     [JsonProperty (PropertyName = "name")]
     public string Name { get; set; }
     [JsonProperty (PropertyName = "battlesPlayed")]
-    public string WarBattlesPlayed { get; set; }
+    public int WarBattlesPlayed { get; set; }
     [JsonProperty (PropertyName = "wins")]
-    public string WarWins { get; set; }
+    public int WarWins { get; set; }
     [JsonProperty (PropertyName = "collectionDayBattlesPlayed")]
-    public string CollectionDayBattlesPlayed { get; set; }
+    public int CollectionDayBattlesPlayed { get; set; }
   }
 }
