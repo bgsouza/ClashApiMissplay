@@ -11,9 +11,17 @@ namespace Clash.Controllers {
     [Route ("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase {
+        
+        private readonly ClashProvider _clashProvider;
+        protected string token;
+        protected string BaseUrl;
 
-        private readonly string token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjJhMjU0NjEzLTg5NjAtNDM0ZS04N2I1LTE2NWQ3NmVhNjgzMCIsImlhdCI6MTUzODQxODk5OSwic3ViIjoiZGV2ZWxvcGVyL2M1OTVjY2Q0LTA1NDktMmY0MC1lMTI0LTA4M2I1Mjc4NTU0YiIsInNjb3BlcyI6WyJyb3lhbGUiXSwibGltaXRzIjpbeyJ0aWVyIjoiZGV2ZWxvcGVyL3NpbHZlciIsInR5cGUiOiJ0aHJvdHRsaW5nIn0seyJjaWRycyI6WyIxNzcuMTI2LjE4MC44MyJdLCJ0eXBlIjoiY2xpZW50In1dfQ.sVW3w94DEDwNTbi6KYTHG0M24llWyEYlxJF5vGb8dLk4H0OflUGoFSRH_GGkifki1CPkzEv27SFEUz4bq3Uurw";
-        private readonly string BaseUrl = "https://api.clashroyale.com/v1/";
+        public ValuesController(IOptions<ClashProvider> clashProvider)
+	    {
+		    _clashProvider = clashProvider.Value;
+            token = _clashProvider.Token;
+            BaseUrl = _clashProvider.Url;
+	    }
 
         [HttpGet]
         [Route ("getLastWar")]
