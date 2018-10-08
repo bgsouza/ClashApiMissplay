@@ -17,11 +17,11 @@ namespace Clash.Controllers {
         protected string BaseUrl;
 
         public ValuesController(IOptions<ClashProvider> clashProvider)
-	    {
-		    _clashProvider = clashProvider.Value;
-            token = _clashProvider.Token;
-            BaseUrl = _clashProvider.Url;
-	    }
+	{
+	  _clashProvider = clashProvider.Value;
+          token = _clashProvider.Token;
+          BaseUrl = _clashProvider.Url;
+	}
 
         [HttpGet]
         [Route ("getLastWar")]
