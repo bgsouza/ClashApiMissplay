@@ -6,6 +6,8 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace Clash.Controllers {
     [Route ("api/[controller]")]
@@ -15,18 +17,20 @@ namespace Clash.Controllers {
         private readonly ClashProvider _clashProvider;
         protected string token;
         protected string BaseUrl;
+        protected string code;
 
         public ValuesController(IOptions<ClashProvider> clashProvider)
-	{
-	  _clashProvider = clashProvider.Value;
-          token = _clashProvider.Token;
-          BaseUrl = _clashProvider.Url;
-	}
+	    {
+	        _clashProvider = clashProvider.Value;
+            token = _clashProvider.Token;
+            BaseUrl = _clashProvider.Url;
+            code = WebUtility.UrlEncode(_clashProvider.HashOfClan);
+    	}
 
         [HttpGet]
         [Route ("getLastWar")]
         public ItemsList GetLastWar () {
-            string url = BaseUrl + "clans/%232G9L0VCC/warlog?limit=1";
+            string url = BaseUrl + $"clans/{this.code}/warlog?limit=1";
             WebHeaderCollection headers = new WebHeaderCollection ();
             headers.Add ($"Authorization: Bearer {token}");
             HttpWebRequest getRequest = (HttpWebRequest) WebRequest.Create (url);
@@ -48,7 +52,7 @@ namespace Clash.Controllers {
         public List<string> GetMembers () {
             List<string> membersList = new List<string> ();
 
-            string url = BaseUrl + "clans/%232G9L0VCC/members";
+            string url = BaseUrl + $"clans/{this.code}/members";
             WebHeaderCollection headers = new WebHeaderCollection ();
             headers.Add ($"Authorization: Bearer {token}");
             HttpWebRequest getRequest = (HttpWebRequest) WebRequest.Create (url);
