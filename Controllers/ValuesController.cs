@@ -6,19 +6,31 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace Clash.Controllers {
     [Route ("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase {
+        
+        private readonly ClashProvider _clashProvider;
+        protected string token;
+        protected string BaseUrl;
+        protected string code;
 
-        private readonly string token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjJhMjU0NjEzLTg5NjAtNDM0ZS04N2I1LTE2NWQ3NmVhNjgzMCIsImlhdCI6MTUzODQxODk5OSwic3ViIjoiZGV2ZWxvcGVyL2M1OTVjY2Q0LTA1NDktMmY0MC1lMTI0LTA4M2I1Mjc4NTU0YiIsInNjb3BlcyI6WyJyb3lhbGUiXSwibGltaXRzIjpbeyJ0aWVyIjoiZGV2ZWxvcGVyL3NpbHZlciIsInR5cGUiOiJ0aHJvdHRsaW5nIn0seyJjaWRycyI6WyIxNzcuMTI2LjE4MC44MyJdLCJ0eXBlIjoiY2xpZW50In1dfQ.sVW3w94DEDwNTbi6KYTHG0M24llWyEYlxJF5vGb8dLk4H0OflUGoFSRH_GGkifki1CPkzEv27SFEUz4bq3Uurw";
-        private readonly string BaseUrl = "https://api.clashroyale.com/v1/";
+        public ValuesController(IOptions<ClashProvider> clashProvider)
+	    {
+	        _clashProvider = clashProvider.Value;
+            token = _clashProvider.Token;
+            BaseUrl = _clashProvider.Url;
+            code = WebUtility.UrlEncode(_clashProvider.HashOfClan);
+    	}
 
         [HttpGet]
         [Route ("getLastWar")]
         public ItemsList GetLastWar () {
-            string url = BaseUrl + "clans/%232G9L0VCC/warlog?limit=1";
+            string url = BaseUrl + $"clans/{this.code}/warlog?limit=1";
             WebHeaderCollection headers = new WebHeaderCollection ();
             headers.Add ($"Authorization: Bearer {token}");
             HttpWebRequest getRequest = (HttpWebRequest) WebRequest.Create (url);
@@ -40,7 +52,7 @@ namespace Clash.Controllers {
         public List<string> GetMembers () {
             List<string> membersList = new List<string> ();
 
-            string url = BaseUrl + "clans/%232G9L0VCC/members";
+            string url = BaseUrl + $"clans/{this.code}/members";
             WebHeaderCollection headers = new WebHeaderCollection ();
             headers.Add ($"Authorization: Bearer {token}");
             HttpWebRequest getRequest = (HttpWebRequest) WebRequest.Create (url);
